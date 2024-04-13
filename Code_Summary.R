@@ -1,7 +1,9 @@
 # Dear class,
-# Here's a summary of R code complied according to the questions I learned during the TA hour.
-# But please remember, they were pooled from different sources, so they can't be run smoothly in R studio, though I guess it provides good reference for the core code you could use to complete Dr. Lin's assignments.
-# Hope this helps and good luck to your assignments!
+# Here's a summary of the R code complied according to the questions I learned during the TA hour.
+# But please remember, they were pooled from different sources, so they can't be run smoothly in R studio, though I guess it provides a good reference for the core code you could use to complete Dr. Lin's assignments.
+# Feel free to email me if you find any error regarding syntax in this file. Thank you!
+# I will try to update it according to the new questions I learned from you guys.
+# Hope this helps and good luck with your assignments!
 
 
 library(rio)
