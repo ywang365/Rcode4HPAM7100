@@ -91,8 +91,9 @@ tt <- svyttest(outcome ~ 1, dt_survey)
 confint(tt, level = 0.95)
 # Paired-samples t-test. the “I” is used to tell R to leave the part in parentheses “as is”, meaning do the subtraction between the two variables. Hence, the formula means that the difference between
 svyttest(I(pad660-pad675)~0, nhc, na = TRUE)
-# independent-samples t-test
-tt <- svyttest(continuous_outcome_var ~ categorical_group_var, dt_survey)
+# independent-samples t-test (two-sample t test for difference of means)
+# var_of_focus can be either continuous or binary. If it's binary, it should be 0/1, not 1/2. And of course, it can't have more than 2 categories, like 1/2/3.
+tt <- svyttest(var_of_focus ~ categorical_group_var, dt_survey)
 tt
 confint(tt, level = 0.95)
 
