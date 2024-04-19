@@ -68,7 +68,7 @@ svytable(~X_RFSMOK3, design = cg17_pe_design)
 # Method 1
 cg17_pe %>% count(vars = X_RFSMOK3, by = SEX, wt = X_LLCPWT)
 # Method 2
-svytable(~X_RFSMOK3 + SEX, design = cg17_pe_design)
+svytable(~X_RFSMOK3 + SEX, design = cg17_pe_design)   # Put by_var in the 2nd place (e.g., SEX)
 
 
 
