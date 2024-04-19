@@ -186,3 +186,5 @@ export(coef_table, "coef_table.csv")
 # https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
 # https://www.princeton.edu/~otorres/LogitR101.pdf
 # Also, note that as we are using survey data with specific strata and other settings in this course, we may not use the function in the websites above but use svy_vglm and svyolr as illustrated in Code_Summary.R. However, the resources above provide really nice illustrations on how to interpret the results.
+
+
