@@ -119,11 +119,20 @@ svytable(~y + x, design = dt_design) %>% as.matrix() %>% chisq.test()
 
 
 
-# Univariate Linear regression: package survey
+# Regressions
+# 1. Linear regression
+# Univariate Linear regression (package survey used)
 model_ln <- svyglm(y ~ x, design = dt_survey)
 summary(model_ln)
 
-# Univariate Logistic Regression: package survey
+# Multivariate Linear regression
+model_ln <- svyglm(y ~ x, design = dt_survey)
+summary(model_ln)
+
+# 2. Logit regression
+# 2.1 Dependent variable (y) is binary (only 2 categories)
+
+# Univariate Logistic Regression
 model_lg <- svyglm(y ~ x, family = quasibinomial, design = dt_survey)
 summary(model_lg)
 
@@ -148,18 +157,32 @@ table1$aorul <- table1$"97.5 %"
 table1 <- table1 %>% select(hv, OR, orll, orul, AOR, aorll, aorul)
 
 
-# Ordinal/Ordered logistic regression
+# 2.2 Dependent variable (y) has 3 categories or more.
+# If dependent variable has 3 categories or more., you can't use the logistic regression code above which requires only 2 categories in dependent variable. The new logistic regression here is called ordinal/ordered logistic regression. However, this method is kind of complicated. Dr. Lin didn't teach that, either. You can choose whether to dive deeper.
+# Ordinal/Ordered logistic regression (Method 2 preferred)
+
 # Method 1  https://rpubs.com/BAFlores/872025 
-install.packages("svyVGAM")  # This is a new package. As your dependent variable has 5 categories, you can't use multivariate logistic regression which requires only 2 categories (0/1) in dependent variable. However, this method is kind of complicated. Dr. Lin didn't teach that, either. You can choose if you wish to dive deeper. Here's a link for it: https://rpubs.com/BAFlores/872025 
+install.packages("svyVGAM")  # This is a new package. 
 library(svyVGAM)
 result <- svy_vglm(as.ordered(y) ~ x1 + x2 + x3 + x4 , design = dt_design, family=cumulative(parallel = TRUE, reverse = TRUE))
 summary(result)
 
-# Method 2 https://stats.oarc.ucla.edu/r/seminars/survey-data-analysis-with-r/
-ologit1 <- svyolr(factor(dmdeduc2)~factor(female)+factor(dmdborn4)+pad680, design = nhc, method = c("logistic"))
-summary(ologit1)
+# Method 2 - See svyolr in https://stats.oarc.ucla.edu/r/seminars/survey-data-analysis-with-r/
+# y x1 x2 categorical, x3 continuous.
+orderlogit_results <- svyolr(factor(y)~factor(x1)+factor(x2)+x3, design = nhc, method = c("logistic"))
 
+summary(orderlogit_results)
 
+# Know more about this function
+?svyolr 
 
+# Generate P values as there are no P values above. 
+coef_table <- data.frame(coef(summary(orderlogit_results)))
+coef_table$pval = round((pnorm(abs(coef_table$t.value), lower.tail = FALSE) * 2), 4)
+# Export the results.
+export(coef_table, "coef_table.csv")
 
-
+# How to interpret the results of logit regression?
+# https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
+# https://www.princeton.edu/~otorres/LogitR101.pdf
+# Also, note that as we are using survey data with specific strata and other settings in this course, we may not use the function in the websites above but use svy_vglm and svyolr as illustrated in Code_Summary.R. However, the resources above provide really nice illustrations on how to interpret the results.
