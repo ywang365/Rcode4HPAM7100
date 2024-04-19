@@ -19,12 +19,12 @@ dt <- dt[which(dt$v != 0), ]
 
 
 # Note: Always create survey design after (not before) you revised the data because R won't do that automatically.
-# Method 1: srvyr
+# Method 1: srvyr (Please use this one)
 dt_survey <- dt %>%
   as_survey_design(ids = PSU, strata = STSTR, weights = LLCPWT, nest = TRUE)
 
 # Method 2: survey
-dt_survey <-svydesign(id=~PSU, strata = ~STSTR, weights = ~LLCPWT, data = dt, nest = TRUE) 
+# dt_survey <-svydesign(id=~PSU, strata = ~STSTR, weights = ~LLCPWT, data = dt, nest = TRUE) 
 
 options(survey.lonely.psu = "adjust")
 
