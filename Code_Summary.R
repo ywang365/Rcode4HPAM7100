@@ -182,6 +182,13 @@ coef_table$pval = round((pnorm(abs(coef_table$t.value), lower.tail = FALSE) * 2)
 # Export the results.
 export(coef_table, "coef_table.csv")
 
+# The coefficients above are not odds ratio, to obtain odds ratio, please do the following transformation. 
+oddsratio <- as.data.frame(exp(orderlogit_results$coefficients))
+export(oddsratio, "oddsratio.csv")
+ci <- as.data.frame(exp(confint(orderlogit_results)))
+export(ci, "ci.csv")
+# P value will always be the same, no need to transform.
+
 # How to interpret the results of logit regression?
 # https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
 # https://stats.oarc.ucla.edu/other/mult-pkg/faq/ologit/
