@@ -138,7 +138,7 @@ summary(model_lg)
 
 # Multivariate Logistic Regression
 alr <- svyglm(y ~ x1 + x2 + x3 + x4, family = quasibinomial, design = dt_design)
-summary(alr)
+summary(alr)  # Find p-value and statistical significance (*, **, ***) here.
 confint(alr)
 
 exp(coef(alr))
@@ -146,15 +146,8 @@ exp(cbind(AOR = coef(alr), confint(alr)))
 exp(cbind(AOR = coef(alr), confint(alr)))[-1, ]
 adj_or <- exp(cbind(AOR = coef(alr), confint(alr)))[-1, ]
 adj_or <- as.data.frame(adj_or)
-
-table1 <- bind_cols(all_or, adj_or)
-colnames(table1)
-table1 <- table1 %>% select("hv", "OR", "X2.5..", "X97.5..", "AOR", "2.5 %", "97.5 %")
-table1$orll <- table1$X2.5..
-table1$orul <- table1$X97.5..
-table1$aorll <- table1$"2.5 %"
-table1$aorul <- table1$"97.5 %"
-table1 <- table1 %>% select(hv, OR, orll, orul, AOR, aorll, aorul)
+adj_or$var <- rownames(adj_or)
+export(adj_or, "adj_or.csv") # Find adjusted odds ratio and 95% CI here.
 
 
 # 2.2 Dependent variable (y) has 3 categories or more.
