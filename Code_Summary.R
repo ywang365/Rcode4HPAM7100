@@ -172,12 +172,13 @@ summary(orderlogit_results)
 # Generate P values as there are no P values above. 
 coef_table <- data.frame(coef(summary(orderlogit_results)))
 coef_table$pval = round((pnorm(abs(coef_table$t.value), lower.tail = FALSE) * 2), 4)
-# Export the results.
+# Export the coefficients (p values are here. However, the coefficients here are not odds ratio.)
 export(coef_table, "coef_table.csv")
 
 # The coefficients above are not odds ratio, to obtain odds ratio, please do the following transformation. 
 oddsratio <- as.data.frame(exp(orderlogit_results$coefficients))
 export(oddsratio, "oddsratio.csv")
+# Similarly, the 95% CI.
 ci <- as.data.frame(exp(confint(orderlogit_results)))
 export(ci, "ci.csv")
 # P value will always be the same, no need to transform.
