@@ -153,6 +153,7 @@ export(adj_or, "adj_or.csv")   # Find the adjusted odds ratio and 95% CI here.
 # 2.2 Dependent variable (y) has 3 categories or more.
 # If dependent variable has 3 categories or more., you can't use the logistic regression code above which requires only 2 categories in dependent variable. The new logistic regression here is called ordinal/ordered logistic regression. However, this method is kind of complicated. Dr. Lin didn't teach that, either. You can choose whether to dive deeper.
 # Ordinal/Ordered logistic regression (Method 2 preferred)
+# Also, note! These 3 categories or more should be progressive or regressive; they shouldn't be "paralleled", which means, a variable for smoking frequency (0 day of smoking in a month, 1-7 days of smoking, 7-14 days of smoking...) has progressive options. A variable for favorite fruits (apple, peach, orange...) has paralleled options.
 
 # Method 1  https://rpubs.com/BAFlores/872025 
 install.packages("svyVGAM")  # This is a new package. 
